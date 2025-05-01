@@ -26,7 +26,7 @@ function SearchFriends() {
   const handleSearch = async () => {
     if (searchTerm) {
       try {
-        const response = await axios.post(`http://localhost:3000/searchUsers?q=${searchTerm}`, {
+        const response = await axios.post(`https://nutritionai-backend.onrender.com/searchUsers?q=${searchTerm}`, {
           id: currentUserId,
         });
         console.log(response.data);
@@ -42,7 +42,7 @@ function SearchFriends() {
   // Handle adding a friend
   const handleAddFriend = async (username) => {
     try {
-      await axios.post("http://localhost:3000/toggleFriend", {
+      await axios.post("https://nutritionai-backend.onrender.com/toggleFriend", {
         id: currentUserId,
         targetUserName: username,
         adding: true,
@@ -61,7 +61,7 @@ function SearchFriends() {
   const handleRemoveFriend = async (username) => {
     try {
       console.log(currentUserId);
-      await axios.post("http://localhost:3000/toggleFriend", {
+      await axios.post("https://nutritionai-backend.onrender.com/toggleFriend", {
         id: currentUserId,
         targetUserName: username,
         adding: false,

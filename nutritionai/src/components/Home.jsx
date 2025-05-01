@@ -18,14 +18,14 @@ function Home() {
   //Sends a request to register the user if they have not been already
   useEffect(() => {
     async function getUserAndNotifications() {
-      await axios.post("http://localhost:3000/newUser", {
+      await axios.post("https://nutritionai-backend.onrender.com/newUser", {
         id: user.id,
         email: user.primaryEmailAddress?.emailAddress,
         username: user.username,
         profilePicture: user.imageUrl,
       });
 
-      const { data } = await axios.get(`http://localhost:3000/user/${user.id}`);
+      const { data } = await axios.get(`https://nutritionai-backend.onrender.com/user/${user.id}`);
       const newNotifs = data.notifications.filter((notification) => !notification.seen);
       const oldNotifs = data.notifications.filter((notification) => notification.seen);
 
@@ -100,7 +100,7 @@ function Home() {
           onClick={async () => {
             setOpen(true);
             setNewNotifications(false);
-            await axios.post("http://localhost:3000/seenNotifications", { userId: user.id });
+            await axios.post("https://nutritionai-backend.onrender.com/seenNotifications", { userId: user.id });
           }}
           style={{ fontSize: "30px", cursor: "pointer" }}
           twoToneColor={"black"}

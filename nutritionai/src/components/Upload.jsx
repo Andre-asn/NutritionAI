@@ -33,7 +33,7 @@ function Upload() {
     const reader = new FileReader();
     reader.addEventListener("load", async (e) => {
       console.log("Sending image to server...");
-      const { data } = await axios.post("http://localhost:3000/upload", {
+      const { data } = await axios.post("https://nutritionai-backend.onrender.com/upload", {
         image: e.target.result,
         id: user.id,
       });

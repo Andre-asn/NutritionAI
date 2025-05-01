@@ -45,7 +45,7 @@ function Tracking() {
         if (isSignedIn) {
             const fetchImages = async () => {
                 try {
-                    const userData = (await axios.get(`http://localhost:3000/user/${user.id}`)).data;
+                    const userData = (await axios.get(`https://nutritionai-backend.onrender.com/user/${user.id}`)).data;
                     userData.calories = parseFloat(userData.calories);
                     userData.protein = parseFloat(userData.protein);
                     userData.fat = parseFloat(userData.fat);
@@ -56,7 +56,7 @@ function Tracking() {
                     userData.carbohydrateThreshold = parseFloat(userData.carbohydrateThreshold);
                     setUserData(userData);
 
-                    const { data } = await axios.get(`http://localhost:3000/savedmeal/${user.id}`);
+                    const { data } = await axios.get(`https://nutritionai-backend.onrender.com/savedmeal/${user.id}`);
                     setMeals(data);
                 } catch (err) {
                     console.error('Error fetching images:', err);

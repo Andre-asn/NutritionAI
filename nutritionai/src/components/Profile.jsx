@@ -20,7 +20,7 @@ const Profile = () => {
   const [userGoals, setUserGoals] = useState([]);
 
   async function updateGoals(cal, calt, pro, prot, car, cart, fat, fatt) {
-    await axios.post("http://localhost:3000/updateGoals", {
+    await axios.post("https://nutritionai-backend.onrender.com/updateGoals", {
       id: user.id,
       cal,
       calt,
@@ -36,7 +36,7 @@ const Profile = () => {
 
   async function suggestGoal() {
     try {
-      const response = await axios.post("http://localhost:3000/suggest-goal", {
+      const response = await axios.post("https://nutritionai-backend.onrender.com/suggest-goal", {
         prompt: goalPrompt,
       });
       setSuggestedGoal(response.data.suggestion);
@@ -47,7 +47,7 @@ const Profile = () => {
 
   async function saveSuggestedGoal() {
     try {
-      await axios.post("http://localhost:3000/add-goal-description", {
+      await axios.post("https://nutritionai-backend.onrender.com/add-goal-description", {
         id: user.id,
         goalDescription: suggestedGoal,
       });
@@ -63,10 +63,10 @@ const Profile = () => {
       console.log(user);
       const fetchImages = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/savedmeal/${user.id}`);
+          const response = await axios.get(`https://nutritionai-backend.onrender.com/savedmeal/${user.id}`);
           const data = response.data;
 
-          const userData = (await axios.get(`http://localhost:3000/user/${user.id}`)).data;
+          const userData = (await axios.get(`https://nutritionai-backend.onrender.com/user/${user.id}`)).data;
           setUserData(userData);
           setImages(data);
         } catch (err) {
@@ -78,7 +78,7 @@ const Profile = () => {
       };
       const fetchGoals = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/getgoals/${user.id}`);
+          const response = await axios.get(`https://nutritionai-backend.onrender.com/getgoals/${user.id}`);
           console.log(response.data.goals);
           setUserGoals(response.data.goals);
         } catch (e) {

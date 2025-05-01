@@ -17,7 +17,7 @@ const FriendsMeals = () => {
   useEffect(() => {
     const fetchFriendsMeals = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/getAllFriend/${user.id}`);
+        const response = await axios.get(`https://nutritionai-backend.onrender.com/getAllFriend/${user.id}`);
         const cleanedResponse = response.data.filter((f) => f);
 
         // Check if we have any friends
@@ -27,9 +27,9 @@ const FriendsMeals = () => {
 
           const friendMealsPromises = cleanedResponse.map(async (friendId) => {
             if (!friendId) return;
-            const friendMeals = await axios.get(`http://localhost:3000/savedmeal/${friendId}`);
+            const friendMeals = await axios.get(`https://nutritionai-backend.onrender.com/savedmeal/${friendId}`);
             // Fetch friend's username
-            const friendData = await axios.get(`http://localhost:3000/user/${friendId}`);
+            const friendData = await axios.get(`https://nutritionai-backend.onrender.com/user/${friendId}`);
 
             setFriendUsername(friendData.data.username); // Store friend's username
             return friendMeals.data.map((meal) => ({ ...meal, friendId }));
@@ -57,7 +57,7 @@ const FriendsMeals = () => {
 
   const handleLikeDislike = async (mealId, action) => {
     try {
-      const response = await axios.post("http://localhost:3000/reaction", {
+      const response = await axios.post("https://nutritionai-backend.onrender.com/reaction", {
         mealId: mealId,
         userId: user.id,
         action: action,
