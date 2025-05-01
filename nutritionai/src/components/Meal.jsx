@@ -1,45 +1,50 @@
-function Meal(props) {
-  const { calories, fat, protein, carbs, sodium, sugar, image, food, index, score, feedback } =
-    props;
+import React from "react";
 
+function Meal({
+  score,
+  calories,
+  fat,
+  protein,
+  carbs,
+  sodium,
+  sugar,
+  image,
+  food,
+  feedback,
+}) {
   return (
-    <div className="responsive-container bg-gradient-to-r from-purple-500 to-cyan-400 p-4 mb-4 rounded-lg text-black">
-      <h3 className="responsive-heading text-xl font-semibold mb-4">{food || ""}</h3>
+    <div className="w-full max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+      <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4 uppercase tracking-wide">
+        {food}
+      </h2>
 
-      <div className="flex flex-col sm:flex-row sm:space-x-6 sm:items-start">
-        <div className="flex-1 space-y-2 mb-4 sm:mb-0">
-          <p>Calories: {calories?.toFixed(1) + " kCal" || "N/A"}</p>
-          <p>Fat: {fat?.toFixed(1) + " g" || "N/A"}</p>
-          <p>Protein: {protein?.toFixed(1) + " g" || "N/A"}</p>
-        </div>
-
-        <div className="flex justify-center mb-4 sm:mb-0">
+      <div className="flex flex-col md:flex-row gap-6 items-center">
+        <div className="flex-shrink-0">
           <img
-            className="responsive-image rounded-lg w-48 h-auto"
-            src={`data:image/png;base64,${image}`}
-            style={{ width: "200px", margin: "10px", borderRadius: "10px" }}
-            alt={`Meal ${index + 1}`}
+            src={image}
+            alt="Meal"
+            className="w-60 h-60 object-cover rounded-xl border border-gray-300 shadow"
           />
         </div>
 
-        <div className="flex-1 space-y-2 mb-4 sm:mb-0">
-          <p>Carbohydrates: {carbs?.toFixed(1) + " g" || "N/A"}</p>
-          <p>Sodium: {sodium?.toFixed(1) + " mg" || "N/A"}</p>
-          <p>Sugar: {sugar?.toFixed(1) + " g" || "N/A"}</p>
+        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
+          <div><strong>Calories:</strong> {calories} kcal</div>
+          <div><strong>Fat:</strong> {fat} g</div>
+          <div><strong>Protein:</strong> {protein} g</div>
+          <div><strong>Carbs:</strong> {carbs} g</div>
+          <div><strong>Sodium:</strong> {sodium} mg</div>
+          <div><strong>Sugar:</strong> {sugar} g</div>
+          <div><strong>Health Score:</strong> {score}</div>
         </div>
+      </div>
 
-        <div className="mb-4 sm:mb-0">
-          <p>Score: {score}</p>
-        </div>
-
-        {feedback && (
-          <div className="mt-4 sm:mb-0">
-            <h4 className="font-semibold">Feedback</h4>
-            <p>1. {feedback[0]}</p>
-            <p>2. {feedback[1]}</p>
-            <p>3. {feedback[2]}</p>
-          </div>
-        )}
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-2">Feedback</h3>
+        <ul className="list-disc list-inside text-gray-600 text-sm space-y-1">
+          {feedback.map((item, idx) => (
+            <li key={idx}>{item}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
