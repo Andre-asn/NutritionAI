@@ -3,6 +3,7 @@ import React from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+import Layout from "./components/Layout.jsx";
 import Upload from "./components/Upload.jsx";
 import Home from "./components/Home.jsx";
 import Profile from "./components/Profile.jsx";
@@ -17,25 +18,34 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={isSignedIn ? <Home /> : <SignedOutPage />} />
       <Route path="/sign-in/*" element={<SignIn />} />
       <Route path="/sign-up/*" element={<SignUp />} />
-      <Route path="/upload" element={<Upload />} />
       <Route
-        path="/profile"
-        element={isSignedIn ? <Profile /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/add-friends"
-        element={isSignedIn ? <SearchFriends /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/friends-meals"
-        element={isSignedIn ? <FriendsMeals /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/tracking"
-        element={isSignedIn ? <Tracking /> : <Navigate to="/" />}
+        path="*"
+        element={
+          <Layout>
+            <Routes>
+              <Route path="/" element={isSignedIn ? <Home /> : <SignedOutPage />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route
+                path="/profile"
+                element={isSignedIn ? <Profile /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/add-friends"
+                element={isSignedIn ? <SearchFriends /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/friends-meals"
+                element={isSignedIn ? <FriendsMeals /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/tracking"
+                element={isSignedIn ? <Tracking /> : <Navigate to="/" />}
+              />
+            </Routes>
+          </Layout>
+        }
       />
     </Routes>
   );
