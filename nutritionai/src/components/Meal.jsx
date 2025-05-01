@@ -21,7 +21,7 @@ function Meal({
       <div className="flex flex-col md:flex-row gap-6 items-center">
         <div className="flex-shrink-0">
           <img
-            src={image}
+            src={`data:image/jpeg;base64,${image}`}
             alt="Meal"
             className="w-60 h-60 object-cover rounded-xl border border-gray-300 shadow"
           />
