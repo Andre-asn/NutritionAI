@@ -8,39 +8,36 @@ function Upload() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
       setImageUrl(URL.createObjectURL(file));
-    }
-  };
 
-  const handleUpload = async () => {
-    if (!image) return;
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64Image = reader.result.split(",")[1];
 
-    setLoading(true);
-    setResult(null);
+        setLoading(true);
+        setResult(null);
 
-    const formData = new FormData();
-    formData.append("image", image);
+        try {
+          const response = await axios.post("https://nutritionai-backend.onrender.com/sendImage", {
+            image: base64Image,
+            fileName: file.name,
+            mimeType: file.type
+          });
 
-    try {
-      const response = await axios.post(
-        "https://nutritionai-backend.onrender.com/sendImage",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
+          setResult(response.data);
+        } catch (error) {
+          console.error("Upload failed:", error);
+          alert("Failed to process the image.");
         }
-      );
 
-      setResult(response.data);
-    } catch (error) {
-      console.error("Upload failed:", error);
-      alert("Failed to process the image.");
+        setLoading(false);
+      };
+      reader.readAsDataURL(file);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -58,13 +55,11 @@ function Upload() {
           />
         )}
 
-        <button
-          onClick={handleUpload}
-          disabled={!image || loading}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded disabled:opacity-50"
-        >
-          {loading ? "One Moment..." : "Analyze Image"}
-        </button>
+        {loading && (
+          <button disabled className="bg-blue-600 text-white px-6 py-2 rounded opacity-60">
+            One Moment...
+          </button>
+        )}
       </div>
 
       {result && <UploadResult imageUrl={imageUrl} result={result} />}
